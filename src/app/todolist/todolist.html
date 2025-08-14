@@ -1,0 +1,51 @@
+<section class="todo-container">
+  <!-- Add Task -->
+  <div class="todo-card">
+    <form (ngSubmit)="onSubmit(taskForm)" #taskForm="ngForm" class="todo-form">
+      <input
+        type="text"
+        placeholder="Enter a new task..."
+        required
+        name="task"
+        ngModel
+        class="todo-input"
+      />
+      <button 
+        [disabled]="taskForm.invalid"
+        type="submit" 
+        class="todo-btn">Add</button>
+    </form>
+  </div>
+
+  <!-- Task Table -->
+  <div class="todo-card">
+    <table class="todo-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Done</th>
+          <th>Task</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of taskArray$ | async; let i = index">
+  <td>{{ i + 1 }}</td>
+  <td>
+  <input 
+    type="checkbox" 
+    [checked]="t.iscompleted" 
+    (change)="onCheck(i)" />
+</td>
+
+  <td>{{ t.taskName }}</td>
+  <td>
+    <button (click)="editTask(i)">Edit</button>
+    <button (click)="deleteTask(i)">Delete</button>
+    <button (click)="viewDetails(i)">View Details</button>
+  </td>
+</tr>
+      </tbody>
+    </table>
+  </div>
+</section>

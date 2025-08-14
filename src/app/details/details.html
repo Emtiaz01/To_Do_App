@@ -1,0 +1,10 @@
+<h2>Task Details</h2>
+
+<div *ngIf="task">
+  <p><strong>Task Name:</strong> {{ task.taskName }}</p>
+  <p><strong>Status:</strong> {{ task.iscompleted ? 'Completed' : 'Not Completed' }}</p>
+</div>
+
+<div *ngIf="!task">
+  <p>No task data available.</p>
+</div>
