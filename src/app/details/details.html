@@ -1,10 +1,20 @@
-<h2>Task Details</h2>
+<div class="task-details-container" *ngIf="task">
+  <div class="task-card">
+    <h2 class="task-title">Task Details</h2>
 
-<div *ngIf="task">
-  <p><strong>Task Name:</strong> {{ task.taskName }}</p>
-  <p><strong>Status:</strong> {{ task.iscompleted ? 'Completed' : 'Not Completed' }}</p>
-</div>
+    <div class="task-info">
+      <p><span>ID:</span> {{ task.id }}</p>
+      <p><span>Name:</span> {{ task.taskName }}</p>
+      <p>
+        <span>Status:</span>
+        <span [class.completed]="task.iscompleted" [class.pending]="!task.iscompleted">
+          {{ task.iscompleted ? 'Completed' : 'Pending' }}
+        </span>
+      </p>
+    </div>
 
-<div *ngIf="!task">
-  <p>No task data available.</p>
+    <div class="task-actions">
+      <button class="btn-back" (click)="goBack()">← Back</button>
+    </div>
+  </div>
 </div>

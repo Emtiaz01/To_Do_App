@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // for *ngIf, *ngFor etc.
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-details',
@@ -8,11 +10,30 @@ import { CommonModule } from '@angular/common'; // for *ngIf, *ngFor etc.
   templateUrl: './details.html',
   styleUrls: ['./details.css']
 })
-export class Details {
+export class Details implements OnInit {
   task: any;
+  private apiUrl = 'http://localhost:3000/tasks';
 
-  constructor() {
-    const navigation = window.history.state;
-    this.task = navigation.task || { taskName: 'No Task Found', iscompleted: false };
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.getTaskById(id);
+    }
+  }
+
+  getTaskById(id: string) {
+    this.http.get(`${this.apiUrl}/${id}`).subscribe(data => {
+      this.task = data;
+    });
+  }
+
+  goBack() {
+    this.router.navigate(['/']);
   }
 }
