@@ -1,34 +1,9 @@
 {
   "tasks": [
     {
-      "id": 1,
-      "taskName": "Sample Task",
-      "iscompleted": false
-    },
-    {
-      "id": "c085",
+      "id": "d3d3",
       "taskName": "Brush Teeth",
       "iscompleted": true
-    },
-    {
-      "id": "c92b",
-      "taskName": "Take Shower",
-      "iscompleted": false
-    },
-    {
-      "id": "45ce",
-      "taskName": "Have Breakfast",
-      "iscompleted": false
-    },
-    {
-      "id": "657c",
-      "taskName": "Dress up",
-      "iscompleted": false
-    },
-    {
-      "id": "9907",
-      "taskName": "Leave for office",
-      "iscompleted": false
     }
   ]
 }
