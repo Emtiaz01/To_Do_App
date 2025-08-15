@@ -27,6 +27,10 @@ export class Todolist implements OnInit {
   http = inject(HttpClient);
   selectAllState: boolean = false;
 
+  // New variables for inline editing
+  editingTaskId: number | null = null;
+  editControl = new FormControl('');
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {
@@ -52,18 +56,19 @@ export class Todolist implements OnInit {
     this.http.get<Task[]>(this.apiUrl).subscribe(data => this.TaskList = data);
   }
 
-onSave() {
-  if (this.taskForm.invalid) return;
+  onSave() {
+    if (this.taskForm.invalid) return;
 
-  const newTask = { ...this.taskForm.value };
-  delete newTask.id; // Remove id so JSON server generates one
+    const newTask = { ...this.taskForm.value };
+    delete newTask.id;
 
-  this.http.post<Task>(this.apiUrl, newTask).subscribe(() => {
-    alert('Task saved successfully!');
-    this.getTask();
-    this.taskForm.reset({ iscompleted: false });
-  });
-}
+    this.http.post<Task>(this.apiUrl, newTask).subscribe(() => {
+      alert('Task saved successfully!');
+      this.getTask();
+      this.taskForm.reset({ iscompleted: false });
+    });
+  }
+
   deleteTask(index: number) {
     const task = this.TaskList[index];
     if (!task.id || !confirm('Are you sure you want to delete this task?')) return;
@@ -79,32 +84,47 @@ onSave() {
       .subscribe(() => this.getTask());
   }
 
-editTask(index: number) {
-  const task = this.TaskList[index];
+  // Inline edit start
+  editTask(index: number) {
+    const task = this.TaskList[index];
 
-  if (!task.id) {
-    alert("Cannot edit this task: ID missing.");
-    return;
+    if (!task.id) {
+      alert("Cannot edit this task: ID missing.");
+      return;
+    }
+
+    if (task.iscompleted) {
+      alert('Task already completed! Please uncheck to edit.');
+      return;
+    }
+
+    this.editingTaskId = task.id;
+    this.editControl.setValue(task.taskName);
   }
 
-  if (task.iscompleted) {
-    alert('Task already completed! Please uncheck to edit.');
-    return;
+  saveEdit(taskId: number) {
+    const updatedName = this.editControl.value?.trim();
+    if (!updatedName) {
+      alert("Task name cannot be empty.");
+      return;
+    }
+
+    this.http.patch(`${this.apiUrl}/${taskId}`, { taskName: updatedName })
+      .subscribe(() => {
+        this.editingTaskId = null;
+        this.getTask();
+      });
+  }
+  // Inline edit end
+
+  viewDetails(taskId: number | undefined) {
+    if (!taskId) {
+      alert("Cannot view details: Task ID missing.");
+      return;
+    }
+    this.router.navigate(['/details', taskId]);
   }
 
-  const updated = prompt('Edit task:', task.taskName);
-  if (updated?.trim()) {
-    this.http.patch(`${this.apiUrl}/${task.id}`, { taskName: updated.trim() })
-      .subscribe(() => this.getTask());
-  }
-}
-viewDetails(taskId: number | undefined) {
-  if (!taskId) {
-    alert("Cannot view details: Task ID missing.");
-    return;
-  }
-  this.router.navigate(['/details', taskId]);
-}
   toggleSelectAll() {
     this.selectAllState = !this.selectAllState;
     localStorage.setItem('selectAllState', JSON.stringify(this.selectAllState));

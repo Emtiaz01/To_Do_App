@@ -1,37 +1,33 @@
 <section class="todo-container">
   <div class="todo-header">
-  <!-- Add Task -->
-<form [formGroup]="taskForm" (ngSubmit)="onSave()" class="todo-form">
-    <input
-      type="text"
-      placeholder="Task Name"
-      formControlName="taskName"
-      class="todo-input"
-    />
-    
-    <input
-      type="text"
-      placeholder="Task Description"
-      formControlName="taskDescription"
-      class="todo-input"
-    />
-    
-    <input
-      type="date"
-      formControlName="taskDate"
-      class="todo-input"
-    />
-    
-    <input
-      type="time"
-      formControlName="taskTime"
-      class="todo-input"
-    />
-    
-    <button [disabled]="taskForm.invalid" type="submit" class="todo-btn">
-      Add
-    </button>
-  </form>
+    <!-- Add Task -->
+    <form [formGroup]="taskForm" (ngSubmit)="onSave()" class="todo-form">
+      <input
+        type="text"
+        placeholder="Task Name"
+        formControlName="taskName"
+        class="todo-input"
+      />
+      <input
+        type="text"
+        placeholder="Task Description"
+        formControlName="taskDescription"
+        class="todo-input"
+      />
+      <input
+        type="date"
+        formControlName="taskDate"
+        class="todo-input"
+      />
+      <input
+        type="time"
+        formControlName="taskTime"
+        class="todo-input"
+      />
+      <button [disabled]="taskForm.invalid" type="submit" class="todo-btn">
+        Add
+      </button>
+    </form>
   </div>
 
   <!-- Task Table -->
@@ -49,20 +45,46 @@
         <tr *ngFor="let item of TaskList; let i = index">
           <td>{{ i + 1 }}</td>
           <td>
-            <input type="checkbox" [checked]="item.iscompleted" (change)="onCheck(i)" />
+            <input
+              type="checkbox"
+              [checked]="item.iscompleted"
+              (change)="onCheck(i)"
+            />
           </td>
-          <td>{{ item.taskName }}</td>
+
+          <!-- Inline Edit -->
           <td>
-            <button (click)="editTask(i)">Edit</button>
-            <button (click)="deleteTask(i)">Delete</button>
-            <button (click)="viewDetails(item.id)">View Details</button>
+            <ng-container *ngIf="editingTaskId === item.id; else viewMode">
+              <input
+                type="text"
+                [formControl]="editControl"
+                class="todo-input"
+              />
+            </ng-container>
+
+            <ng-template #viewMode>
+              {{ item.taskName }}
+            </ng-template>
+          </td>
+
+          <td>
+            <ng-container *ngIf="editingTaskId === item.id; else actionButtons">
+              <button (click)="saveEdit(item.id!)">Save</button>
+              <button (click)="editingTaskId = null">Cancel</button>
+            </ng-container>
+
+            <ng-template #actionButtons>
+              <button (click)="editTask(i)">Edit</button>
+              <button (click)="deleteTask(i)">Delete</button>
+              <button (click)="viewDetails(item.id)">View Details</button>
+            </ng-template>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-  <button (click)="toggleSelectAll()" class="todo-btn">
-  {{ selectAllState ? 'Deselect All' : 'Select All' }}
-</button>
 
+  <button (click)="toggleSelectAll()" class="todo-btn">
+    {{ selectAllState ? 'Deselect All' : 'Select All' }}
+  </button>
 </section>

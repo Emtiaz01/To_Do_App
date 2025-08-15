@@ -14,7 +14,6 @@
   transition: transform 0.2s ease;
 }
 
-
 .task-title {
   font-size: 1.6rem;
   font-weight: 600;
@@ -47,15 +46,69 @@
 .task-actions {
   margin-top: 25px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 12px; /* adds spacing between buttons */
+  flex-wrap: wrap; /* keeps layout nice on small screens */
 }
 
 .btn-back {
   background: #3498db;
   color: #fff;
-  padding: 10px 18px;
+  padding: 12px 18px;
   border: none;
   border-radius: 8px;
   font-size: 0.95rem;
   cursor: pointer;
   transition: background 0.2s ease;
+}
+
+.btn-back:hover {
+  background: #2980b9;
+}
+
+.btn-edit {
+  background: #f39c12;
+  color: #fff;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-edit:hover {
+  background: #d68910;
+}
+
+/* Save & Cancel button styles for edit mode */
+.btn-save {
+  background: #2ecc71;
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-save:hover {
+  background: #27ae60;
+}
+
+.btn-cancel {
+  background: #e74c3c;
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-cancel:hover {
+  background: #c0392b;
 }

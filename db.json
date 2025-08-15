@@ -1,20 +1,12 @@
 {
   "tasks": [
     {
-      "id": "4c27",
-      "taskName": "Check Form",
-      "taskDescription": "Ensure the form validation is working properly",
-      "taskDate": "2025-08-25",
-      "taskTime": "22:01",
-      "iscompleted": true
-    },
-    {
       "id": "cb75",
       "taskName": "Submit Assignment",
       "taskDescription": "Complete and submit the Angular project assignment",
       "taskDate": "2025-08-26",
       "taskTime": "23:00",
-      "iscompleted": true
+      "iscompleted": false
     },
     {
       "id": "6cf9",
@@ -22,7 +14,7 @@
       "taskDescription": "Review pull requests and provide feedback",
       "taskDate": "2025-08-30",
       "taskTime": "23:24",
-      "iscompleted": true
+      "iscompleted": false
     },
     {
       "id": "72e8",
@@ -30,7 +22,7 @@
       "taskDescription": "Update project README and documentation",
       "taskDate": "2025-09-06",
       "taskTime": "00:00",
-      "iscompleted": true
+      "iscompleted": false
     }
   ]
 }
