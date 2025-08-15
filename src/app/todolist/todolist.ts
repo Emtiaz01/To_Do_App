@@ -27,7 +27,6 @@ export class Todolist implements OnInit {
   http = inject(HttpClient);
   selectAllState: boolean = false;
 
-  // New variables for inline editing
   editingTaskId: number | null = null;
   editControl = new FormControl('');
 
@@ -46,8 +45,8 @@ export class Todolist implements OnInit {
       id: new FormControl(null),
       taskName: new FormControl('', Validators.required),
       taskDescription: new FormControl(''),
-      taskDate: new FormControl(''),
-      taskTime: new FormControl(''),
+      taskDate: new FormControl('', Validators.required),
+      taskTime: new FormControl('', Validators.required),
       iscompleted: new FormControl(false)
     });
   }
@@ -57,7 +56,10 @@ export class Todolist implements OnInit {
   }
 
   onSave() {
-    if (this.taskForm.invalid) return;
+    if (this.taskForm.invalid) {
+      alert('Please fill all required fields: Task Name, Date, and Time.');
+      return;
+    }
 
     const newTask = { ...this.taskForm.value };
     delete newTask.id;
@@ -84,7 +86,6 @@ export class Todolist implements OnInit {
       .subscribe(() => this.getTask());
   }
 
-  // Inline edit start
   editTask(index: number) {
     const task = this.TaskList[index];
 
@@ -109,13 +110,27 @@ export class Todolist implements OnInit {
       return;
     }
 
-    this.http.patch(`${this.apiUrl}/${taskId}`, { taskName: updatedName })
+    const task = this.TaskList.find(t => t.id === taskId);
+    if (!task) return;
+
+    if (!task.taskDate || !task.taskTime) {
+      alert("Task Date and Time cannot be empty.");
+      return;
+    }
+
+    const updatedTask = {
+      taskName: updatedName,
+      taskDate: task.taskDate,
+      taskTime: task.taskTime,
+      taskDescription: task.taskDescription || ''
+    };
+
+    this.http.patch(`${this.apiUrl}/${taskId}`, updatedTask)
       .subscribe(() => {
         this.editingTaskId = null;
         this.getTask();
       });
   }
-  // Inline edit end
 
   viewDetails(taskId: number | undefined) {
     if (!taskId) {

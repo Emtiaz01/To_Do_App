@@ -15,7 +15,6 @@ export class Details implements OnInit {
   task: any;
   private apiUrl = 'http://localhost:3000/tasks';
 
-  // For editing
   isEditing = false;
   editTaskName = '';
   editTaskDescription = '';
@@ -46,20 +45,33 @@ export class Details implements OnInit {
   }
 
   saveEdit() {
-    if (!this.task?.id) return;
+  if (!this.task?.id) return;
 
-    const updatedTask = {
-      taskName: this.editTaskName.trim(),
-      taskDescription: this.editTaskDescription.trim()
-    };
 
-    this.http.patch(`${this.apiUrl}/${this.task.id}`, updatedTask)
-      .subscribe(() => {
-        this.isEditing = false;
-        this.getTaskById(this.task.id);
-      });
+  const taskName = this.editTaskName.trim();
+  const taskDescription = this.editTaskDescription.trim();
+  const taskDate = this.task.taskDate; 
+  const taskTime = this.task.taskTime;
+
+
+  if (!taskName || !taskDate || !taskTime) {
+    alert('Task Name, Date, and Time cannot be empty!');
+    return;
   }
 
+  const updatedTask = {
+    taskName: taskName,
+    taskDescription: taskDescription,
+    taskDate: taskDate,
+    taskTime: taskTime
+  };
+
+  this.http.patch(`${this.apiUrl}/${this.task.id}`, updatedTask)
+    .subscribe(() => {
+      this.isEditing = false;
+      this.getTaskById(this.task.id);
+    });
+}
   goBack() {
     this.router.navigate(['/todolist']);
   }

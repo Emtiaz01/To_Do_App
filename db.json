@@ -1,27 +1,11 @@
 {
   "tasks": [
     {
-      "id": "cb75",
-      "taskName": "Submit Assignment",
-      "taskDescription": "Complete and submit the Angular project assignment",
-      "taskDate": "2025-08-26",
-      "taskTime": "23:00",
-      "iscompleted": false
-    },
-    {
-      "id": "6cf9",
-      "taskName": "Code Review",
-      "taskDescription": "Review pull requests and provide feedback",
-      "taskDate": "2025-08-30",
-      "taskTime": "23:24",
-      "iscompleted": false
-    },
-    {
-      "id": "72e8",
-      "taskName": "Update Documentation",
-      "taskDescription": "Update project README and documentation",
-      "taskDate": "2025-09-06",
-      "taskTime": "00:00",
+      "id": "9007",
+      "taskName": "Complete",
+      "taskDescription": "Task",
+      "taskDate": "2012-12-12",
+      "taskTime": "12:12",
       "iscompleted": false
     }
   ]

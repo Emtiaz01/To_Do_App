@@ -7,7 +7,7 @@
       <p><span>Name:</span> {{ task.taskName }}</p>
       <p><span>Description:</span> {{ task.taskDescription || 'No description' }}</p>
       <p><span>Submission Date:</span> {{ task.taskDate | date:'fullDate' }}</p>
-      <p><span>Submission Time:</span> {{ task.taskTime || 'hh:a' }}</p>
+      <p><span>Submission Time:</span> {{ task.taskTime || 'hh:mm' }}</p>
       <p>
         <span>Status:</span>
         <span [class.completed]="task.iscompleted" [class.pending]="!task.iscompleted">
@@ -20,7 +20,8 @@
     <div class="task-info" *ngIf="isEditing">
       <p>
         <span>Name:</span>
-        <input [(ngModel)]="editTaskName" class="todo-input" />
+        <input [(ngModel)]="editTaskName" class="todo-input" required />
+        <small *ngIf="!editTaskName?.trim()" class="error-text">Name is required</small>
       </p>
       <p>
         <span>Description:</span>
@@ -28,13 +29,15 @@
       </p>
       <p>
         <span>Submission Date:</span>
-        <input type="date" [(ngModel)]="task.taskDate" class="todo-input" />
+        <input type="date" [(ngModel)]="task.taskDate" class="todo-input" required />
+        <small *ngIf="!task.taskDate" class="error-text">Date is required</small>
       </p>
       <p>
         <span>Submission Time:</span>
-        <input type="time" [(ngModel)]="task.taskTime" class="todo-input" />
+        <input type="time" [(ngModel)]="task.taskTime" class="todo-input" required />
+        <small *ngIf="!task.taskTime" class="error-text">Time is required</small>
       </p>
-     <p>
+      <p>
         <span>Status:</span>
         <span [class.completed]="task.iscompleted" [class.pending]="!task.iscompleted">
           {{ task.iscompleted ? 'Completed' : 'Pending' }}
@@ -52,7 +55,11 @@
 
       <!-- Edit Mode Buttons -->
       <ng-container *ngIf="isEditing">
-        <button (click)="saveEdit()">Save</button>
+        <button 
+          (click)="saveEdit()" 
+          [disabled]="!editTaskName?.trim() || !task.taskDate || !task.taskTime">
+          Save
+        </button>
         <button (click)="toggleEdit()">Cancel</button>
       </ng-container>
     </div>

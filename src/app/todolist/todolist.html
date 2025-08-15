@@ -1,36 +1,62 @@
 <section class="todo-container">
   <div class="todo-header">
-    <!-- Add Task -->
+    
     <form [formGroup]="taskForm" (ngSubmit)="onSave()" class="todo-form">
-      <input
-        type="text"
-        placeholder="Task Name"
-        formControlName="taskName"
-        class="todo-input"
-      />
-      <input
-        type="text"
-        placeholder="Task Description"
-        formControlName="taskDescription"
-        class="todo-input"
-      />
-      <input
-        type="date"
-        formControlName="taskDate"
-        class="todo-input"
-      />
-      <input
-        type="time"
-        formControlName="taskTime"
-        class="todo-input"
-      />
-      <button [disabled]="taskForm.invalid" type="submit" class="todo-btn">
-        Add
-      </button>
+      <div class="input-group">
+        <input
+          type="text"
+          placeholder="Task Name *"
+          formControlName="taskName"
+          class="todo-input"
+          [class.invalid]="taskForm.get('taskName')?.invalid && taskForm.get('taskName')?.touched"
+        />
+        <span class="error-msg" *ngIf="taskForm.get('taskName')?.invalid && taskForm.get('taskName')?.touched">
+          Required
+        </span>
+      </div>
+
+      <div class="input-group">
+        <input
+          type="text"
+          placeholder="Task Description"
+          formControlName="taskDescription"
+          class="todo-input"
+        />
+      </div>
+
+      <div class="input-group">
+        <input
+          type="date"
+          formControlName="taskDate"
+          class="todo-input"
+          [class.invalid]="taskForm.get('taskDate')?.invalid && taskForm.get('taskDate')?.touched"
+        />
+        <span class="error-msg" *ngIf="taskForm.get('taskDate')?.invalid && taskForm.get('taskDate')?.touched">
+          Required
+        </span>
+      </div>
+
+      <div class="input-group">
+        <input
+          type="time"
+          formControlName="taskTime"
+          class="todo-input"
+          [class.invalid]="taskForm.get('taskTime')?.invalid && taskForm.get('taskTime')?.touched"
+        />
+        <span class="error-msg" *ngIf="taskForm.get('taskTime')?.invalid && taskForm.get('taskTime')?.touched">
+          Required
+        </span>
+      </div>
+
+   <div class="button">
+  <button type="submit" class="todo-btn">
+    Add
+  </button>
+</div>
+
     </form>
   </div>
 
-  <!-- Task Table -->
   <div class="todo-card">
     <table class="todo-table">
       <thead>
@@ -52,8 +78,7 @@
             />
           </td>
 
-          <!-- Inline Edit -->
-          <td>
+          <td [class.completed]="item.iscompleted">
             <ng-container *ngIf="editingTaskId === item.id; else viewMode">
               <input
                 type="text"
@@ -84,7 +109,9 @@
     </table>
   </div>
 
+  <div class="button-container" *ngIf="TaskList && TaskList.length > 0">
   <button (click)="toggleSelectAll()" class="todo-btn">
     {{ selectAllState ? 'Deselect All' : 'Select All' }}
   </button>
+</div>
 </section>
