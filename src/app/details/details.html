@@ -46,14 +46,14 @@
     <div class="task-actions">
       <!-- View Mode Buttons -->
       <ng-container *ngIf="!isEditing">
-        <button class="btn-back" (click)="goBack()">Back</button>
-        <button class="btn-edit" (click)="toggleEdit()">Edit</button>
+        <button (click)="goBack()">Back</button>
+        <button (click)="toggleEdit()">Edit</button>
       </ng-container>
 
       <!-- Edit Mode Buttons -->
       <ng-container *ngIf="isEditing">
-        <button class="btn-save" (click)="saveEdit()">Save</button>
-        <button class="btn-cancel" (click)="toggleEdit()">Cancel</button>
+        <button (click)="saveEdit()">Save</button>
+        <button (click)="toggleEdit()">Cancel</button>
       </ng-container>
     </div>
   </div>
