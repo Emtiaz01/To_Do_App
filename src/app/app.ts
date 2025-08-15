@@ -5,10 +5,12 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [FormsModule, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   constructor(private router: Router) {}
+  
 }

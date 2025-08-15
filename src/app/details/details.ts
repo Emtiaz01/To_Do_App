@@ -34,6 +34,6 @@ export class Details implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/todolist']);
   }
 }

@@ -4,6 +4,9 @@
 
     <div class="task-info">
       <p><span>Name:</span> {{ task.taskName }}</p>
+      <p><span>Description:</span> {{ task.taskDescription }}</p>
+      <p><span>Submission Date:</span> {{ task.taskDate | date:'shortDate' }}</p>
+      <p><span>Submission Time:</span> {{ task.taskTime }}</p>
       <p>
         <span>Status:</span>
         <span [class.completed]="task.iscompleted" [class.pending]="!task.iscompleted">

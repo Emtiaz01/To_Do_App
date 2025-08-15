@@ -1,17 +1,37 @@
 <section class="todo-container">
+  <div class="todo-header">
   <!-- Add Task -->
-  <div class="todo-card">
-    <form (ngSubmit)="onSave()" #taskForm="ngForm" class="todo-form">
-      <input
-        type="text"
-        placeholder="Enter a new task..."
-        required
-        name="task"
-        [(ngModel)]="task.taskName"
-        class="todo-input"
-      />
-      <button [disabled]="taskForm.invalid" type="submit" class="todo-btn">Add</button>
-    </form>
+<form [formGroup]="taskForm" (ngSubmit)="onSave()" class="todo-form">
+    <input
+      type="text"
+      placeholder="Task Name"
+      formControlName="taskName"
+      class="todo-input"
+    />
+    
+    <input
+      type="text"
+      placeholder="Task Description"
+      formControlName="taskDescription"
+      class="todo-input"
+    />
+    
+    <input
+      type="date"
+      formControlName="taskDate"
+      class="todo-input"
+    />
+    
+    <input
+      type="time"
+      formControlName="taskTime"
+      class="todo-input"
+    />
+    
+    <button [disabled]="taskForm.invalid" type="submit" class="todo-btn">
+      Add
+    </button>
+  </form>
   </div>
 
   <!-- Task Table -->
@@ -19,8 +39,8 @@
     <table class="todo-table">
       <thead>
         <tr>
-          <th>#</th>
-          <th>Done</th>
+          <th>SL</th>
+          <th>Status</th>
           <th>Task</th>
           <th>Actions</th>
         </tr>
@@ -41,4 +61,8 @@
       </tbody>
     </table>
   </div>
+  <button (click)="toggleSelectAll()" class="todo-btn">
+  {{ selectAllState ? 'Deselect All' : 'Select All' }}
+</button>
+
 </section>
